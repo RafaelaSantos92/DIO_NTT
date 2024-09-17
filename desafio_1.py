@@ -10,7 +10,7 @@ def menu():
     [lc] Listar contas
     [nu] Novo usuário
     [q] Sair
-    => """
+    """
     return input(textwrap.dedent(menu_text))
 
 def depositar(saldo, valor, extrato):
@@ -19,7 +19,7 @@ def depositar(saldo, valor, extrato):
         extrato += f"Depósito: R$ {valor:.2f}\n"
         print("\n=== Depósito realizado com sucesso! ===")
     else:
-        print("\n@@@ Operação falhou! O valor informado é inválido. @@@")
+        print("\nOperação inválida, tente novamente! ")
     return saldo, extrato
 
 def sacar(saldo, valor, extrato, limite, numero_saques, limite_saques):
@@ -28,18 +28,18 @@ def sacar(saldo, valor, extrato, limite, numero_saques, limite_saques):
     excedeu_saques = numero_saques >= limite_saques
 
     if excedeu_saldo:
-        print("\n@@@ Operação falhou! Você não tem saldo suficiente. @@@")
+        print("\nOperação falhou! Você não tem saldo suficiente.")
     elif excedeu_limite:
-        print("\n@@@ Operação falhou! O valor do saque excede o limite. @@@")
+        print("\nOperação falhou! O valor do saque excede o limite.")
     elif excedeu_saques:
-        print("\n@@@ Operação falhou! Número máximo de saques excedido. @@@")
+        print("\nOperação falhou! Número máximo de saques excedido.")
     elif valor > 0:
         saldo -= valor
         extrato += f"Saque: R$ {valor:.2f}\n"
         numero_saques += 1
         print("\n=== Saque realizado com sucesso! ===")
     else:
-        print("\n@@@ Operação falhou! O valor informado é inválido. @@@")
+        print("\nOperação falhou! O valor informado é inválido.")
     return saldo, extrato, numero_saques
 
 def exibir_extrato(saldo, extrato):
@@ -75,12 +75,12 @@ def criar_conta(agencia, numero_conta, usuarios):
         print("\n=== Conta criada com sucesso! ===")
         return {"agencia": agencia, "numero_conta": numero_conta, "usuario": usuario}
 
-    print("\n@@@ Usuário não encontrado, fluxo de criação de conta encerrado! @@@")
+    print("\nUsuário não encontrado, fluxo de criação de conta encerrado!")
     return None
 
 def listar_contas(contas):
     if not contas:
-        print("\nNão há contas para listar.")
+        print("\nNão existem contas cadastradas.")
         return
 
     for conta in contas:
@@ -111,7 +111,7 @@ def main():
                 valor = float(input("Informe o valor do depósito: "))
                 saldo, extrato = depositar(saldo, valor, extrato)
             except ValueError:
-                print("\n@@@ Valor inválido! Por favor, informe um número. @@@")
+                print("\nValor inválido! Por favor, informe um número.")
 
         elif opcao == "s":
             try:
@@ -125,7 +125,7 @@ def main():
                     limite_saques=LIMITE_SAQUES,
                 )
             except ValueError:
-                print("\n@@@ Valor inválido! Por favor, informe um número. @@@")
+                print("\nValor inválido! Por favor, informe um número.")
 
         elif opcao == "e":
             exibir_extrato(saldo, extrato)
